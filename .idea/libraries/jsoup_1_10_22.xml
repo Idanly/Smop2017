@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="jsoup-1.10.22">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../Smop/out/production/Smop/jsoup-1.10.2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

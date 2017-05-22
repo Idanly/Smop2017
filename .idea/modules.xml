@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Smop/Smop.iml" filepath="$PROJECT_DIR$/../Smop/Smop.iml" />
-      <module fileurl="file://D:\Documents\IdeaProjects\Smop2017\SmopToDelete.iml" filepath="D:\Documents\IdeaProjects\Smop2017\SmopToDelete.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Smop2017.iml" filepath="$PROJECT_DIR$/Smop2017.iml" />
     </modules>
   </component>
 </project>
