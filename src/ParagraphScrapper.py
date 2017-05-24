@@ -92,7 +92,6 @@ class GoogleLinkExtractor(SearchEngineLinkExtractor):
     Google link extractor - DOES NOT WORK
     For some reason the openend page of this url is not the same page viewed in the browser
     """
-
     def page_url(self):
         start = "https://www.google.co.il/?gfe_rd=cr&ei=Pz8kWY_AE5Pd8AeOh67QBw#q="
         cont = "&start="
@@ -106,6 +105,7 @@ class GoogleLinkExtractor(SearchEngineLinkExtractor):
 
 
 class SearchEngineScrapper:
+
     def __init__(self, search_query):
         self.http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where(), timeout=3.0)
         self.url_set = set()
@@ -136,13 +136,13 @@ class SearchEngineScrapper:
         self.url_set = set()
         self.kill_flag = False
         search_words = self.search_query.split(" ")
-        ecosia_extractor = EcosiaLinkExtractor(search_words, 3)
+        ecosia_extractor = EcosiaLinkExtractor(search_words, 1)
         ecosia_thread = Thread(target=self.extract_paragraphs, args=(ecosia_extractor,))
-        bing_extractor = BingLinkExtractor(search_words, 3)
+        bing_extractor = BingLinkExtractor(search_words, 1)
         bing_thread = Thread(target=self.extract_paragraphs, args=(bing_extractor,))
-        yahoo_extractor = YahooLinkExtractor(search_words, 3)
+        yahoo_extractor = YahooLinkExtractor(search_words, 1)
         yahoo_thread = Thread(target=self.extract_paragraphs, args=(yahoo_extractor,))
-        ask_extractor = AskLinkExtractor(search_words, 3)
+        ask_extractor = AskLinkExtractor(search_words, 1)
         ask_thread = Thread(target=self.extract_paragraphs, args=(ask_extractor,))
         self.thread_list = [ecosia_thread, bing_thread, yahoo_thread, ask_thread]
         # Google extractor doesn't work atm
@@ -170,7 +170,17 @@ class Paragraph_Scrapper:
 
     def get_n_paragraphs(self, n):
         scrapper = SearchEngineScrapper(search_query=self.query)
-        while not scrapper.has_n_paragraphs(n):
-            pass
+        while not scrapper.has_n_paragraphs(n) or not scrapper.finished():
+            time.sleep(0.5)
         scrapper.kill()
         return scrapper.get_paragraphs()
+
+
+if __name__ == "__main__":
+    query_to_pass = "what is the depth of the mediterranean sea"
+    pretime = time.time()
+    p_scrapper = Paragraph_Scrapper(query_to_pass)
+    paragraphs = p_scrapper.get_n_paragraphs(300)
+    posttime = time.time()
+    print("time diff: " + str(posttime - pretime))
+    print(paragraphs)
