@@ -1,9 +1,13 @@
+import re
 import time
-from threading import Thread
+from threading import Thread, Lock
 
 import certifi
 import urllib3
 from bs4 import BeautifulSoup
+from gensim import corpora, models, similarities
+from nltk.corpus import stopwords
+from six import iteritems
 
 
 class SearchEngineLinkExtractor:
@@ -111,9 +115,10 @@ class SearchEngineScrapper:
         self.url_set = set()
         self.paragraph_list = list()
         self.search_query = search_query
-        self.start_extraction()
-        self.thread_list = list()
+        self.lock = Lock()
         self.kill_flag = False
+        self.thread_list = list()
+        self.start_extraction()
 
     def extract_paragraphs(self, link_extractor):
         for links_list in link_extractor:
@@ -127,7 +132,8 @@ class SearchEngineScrapper:
                         time.sleep(0.3)
                         soup = BeautifulSoup(request.data, "lxml")
                         paragraphs = soup.find_all("p")
-                        self.paragraph_list.extend([p.text for p in paragraphs])
+                        with self.lock:
+                            self.paragraph_list.extend([p.text for p in paragraphs])
                     except Exception as e:
                         print("error from extract paragraphs: " + str(e))
 
@@ -151,6 +157,12 @@ class SearchEngineScrapper:
         yahoo_thread.start()
         ask_thread.start()
 
+    def flush_paragraphs(self):
+        with self.lock:
+            curr_paragraphs = self.paragraph_list
+            self.paragraph_list = list()
+        return curr_paragraphs
+
     def has_n_paragraphs(self, n):
         return len(self.paragraph_list) >= n
 
@@ -164,40 +176,78 @@ class SearchEngineScrapper:
         return self.paragraph_list.copy()
 
 
-class Paragraph_Scrapper:
+class ParagraphScrapper:
     def __init__(self, query):
         self.query = query
+        self.scrapper = SearchEngineScrapper(search_query=self.query)
+        self.pattern = re.compile('[.][A-Z]')
 
-    def get_n_paragraphs(self, n):
-        scrapper = SearchEngineScrapper(search_query=self.query)
-        while not scrapper.has_n_paragraphs(n) or not scrapper.finished():
-            time.sleep(0.5)
-        scrapper.kill()
-        return scrapper.get_paragraphs()
+    def __iter__(self):
+        while not self.scrapper.finished():
+            if self.scrapper.has_n_paragraphs(1):
+                flushed = self.scrapper.flush_paragraphs()
+                for p in flushed:
+                    sentences = p.split('. ')
+                    for s in sentences:
+                        if re.search(self.pattern,
+                                     s):  # There is a sentence starting right after a period (with no space)
+                            more_split = s.split('.')
+                            for t in more_split:
+                                yield t
+                        else:
+                            yield s
+
+    def kill(self):
+        self.scrapper.kill()
 
 
 if __name__ == "__main__":
     query_to_pass = "what is the depth of the mediterranean sea"
-    pretime = time.time()
-    p_scrapper = Paragraph_Scrapper(query_to_pass)
-    paragraphs = p_scrapper.get_n_paragraphs(300)
-    posttime = time.time()
-    print("time diff: " + str(posttime - pretime))
-    print(paragraphs)
+    english_stopwords = set(stopwords.words('english'))
+    query_important_words = [word for word in query_to_pass.split() if word not in english_stopwords]
+    p_scrapper = ParagraphScrapper(query_to_pass)
+    rel_sentences = list()
+    my_iter = p_scrapper.__iter__()
 
 
-def find_relevant_sentences(paragraphs):
-    lines = paragraphs.split(".");
-    relevant_lines = [];
-    words = query_to_pass.split();
-    percentage_to_be_relevant = 0.2  # we need to find the optimal percentage
-    for line in lines:  # runs through the lines and checks whether a line is relevant to the query
-        counter = 0;
+    def is_sentence_relevant(words, sentence):
+        percentage_to_be_relevant = 0.2  # we need to find the optimal percentage
+        counter = 0.0
         for word in words:
-            if word in line:
-                counter = counter + 1
+            if word in sentence:
+                counter += 1
         if counter / len(words) >= percentage_to_be_relevant:
-            relevant_lines.append(line)
+            return True
+
+
+    while len(rel_sentences) < 50:
+        try:
+            next_sentence = next(my_iter)
+            if is_sentence_relevant(query_important_words, next_sentence):
+                rel_sentences.append(next_sentence)
+        except Exception as e:
+            break
+
+    dictionary = corpora.Dictionary(sent.lower().split() for sent in rel_sentences)
+    stop_ids = [dictionary.token2id[stopword] for stopword in english_stopwords
+                if stopword in dictionary.token2id]
+    once_ids = [tokenid for tokenid, docfreq in iteritems(dictionary.dfs) if docfreq == 1]
+    dictionary.filter_tokens(stop_ids + once_ids)  # remove stop words and words that appear only once
+    dictionary.compactify()  # remove gaps in id sequence after words that were removed
+    corpus_gen = (dictionary.doc2bow(sent.lower().split()) for sent in rel_sentences)
+    corpus_list = list(corpus_gen)
+    corpora.MmCorpus.serialize('results_corpus.mm', corpus_list)
+    corpus = corpora.MmCorpus('results_corpus.mm')
+
+    model_tfidf = models.TfidfModel(corpus)
+    corpus_tfidf = model_tfidf[corpus]
+    lsi_model = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=30)
+    query_vec = dictionary.doc2bow(query_to_pass.lower().split())
+    query_lsi = lsi_model[query_vec]
+    index = similarities.MatrixSimilarity(lsi_model[corpus])
+    sims = index[query_lsi]
+    sims = sorted(enumerate(sims), key=lambda item: -item[1])
+    print(corpus[sims[0]])
 
 
 def find_most_common_word(relevant_lines):
@@ -208,7 +258,7 @@ def find_most_common_word(relevant_lines):
         for word in words:  # we can change the counting method according to tf- udf
             if word.getClass() == expected_class:  # we need to implement getClass()
                 if word in relevant_words_from_class:
-                    relevant_words_from_class[word] = relevant_words_from_class[word] + 1
+                    relevant_words_from_class[word] += 1
                 else:
                     relevant_words_from_class[word] = 1
     mostCommon = max(relevant_words_from_class.values())
