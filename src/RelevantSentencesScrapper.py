@@ -24,12 +24,12 @@ class RelevantSentencesScrapper:
         # Sentences that are contained in the query aren't good either
         if all(word in words for word in sentence.split()):
             return False
-        percentage_to_be_relevant = 0.45  # we need to find the optimal percentage
+        percentage_to_be_relevant = 0.4  # we need to find the optimal percentage
         counter = 0.0
         for word in words:
             if word in sentence:
                 counter += 1
-        if (counter / len(words)) + (counter / len(sentence)) >= percentage_to_be_relevant:
+        if counter / len(words) >= percentage_to_be_relevant:
             return True
 
     def get_returned_sentences(self):

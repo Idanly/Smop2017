@@ -26,7 +26,7 @@ class SearchEngineLinkExtractor:
         while self.page_counter != self.num_pages:
             curr_page_url = self.page_url()
             request = self.http.request('GET', curr_page_url)
-            time.sleep(0.3)
+            time.sleep(0.25)
             soup = BeautifulSoup(request.data, "lxml")
             page_hrefs = self.parse_page_hrefs(soup)
             yield page_hrefs
@@ -126,11 +126,12 @@ class SearchEngineScrapper:
             for url in links_list:
                 if url not in self.url_set:
                     if self.kill_flag:
+                        print(link_extractor.__class__.__name__ + " was killed")
                         return
                     self.url_set.add(url)
                     try:
                         request = self.http.request('GET', url)
-                        time.sleep(0.3)
+                        time.sleep(0.1)
                         soup = BeautifulSoup(request.data, "lxml")
                         paragraphs = soup.find_all("p")
                         with self.lock:
@@ -184,6 +185,8 @@ class SentenceScrapper:
         self.pattern = re.compile('[.][A-Z]')
         self.dash_pattern = re.compile('[-]')
         self.space_pattern = re.compile('\s+')
+        self.forbidden_pattern = re.compile('http')  # We don't want a sentence with a link
+        self.sentences_returned = list()
 
     def __iter__(self):
         while not self.scrapper.finished():
@@ -193,20 +196,27 @@ class SentenceScrapper:
                     p = self.space_pattern.sub(' ', self.dash_pattern.sub(' ', p)).strip()
                     sentences = p.split('. ')
                     for s in sentences:
+                        if re.search(self.forbidden_pattern, s):
+                            continue
                         if re.search(self.pattern,
                                      s):  # There is a sentence starting right after a period (with no space)
                             more_split = s.split('.')
                             for t in more_split:
+                                self.sentences_returned.append(t)
                                 yield t
                         else:
+                            self.sentences_returned.append(s)
                             yield s
 
     def kill(self):
         self.scrapper.kill()
 
+    def get_sentences_returned(self):
+        return self.sentences_returned
+
 
 if __name__ == "__main__":
-    query_to_pass = "what is the depth of the mediterranean sea"
+    query_to_pass = "what is the name of the current president of the usa"
 
     relevancy_finder = RelevancyFinder()
     query_important_words = relevancy_finder.important_query_words(query=query_to_pass)
@@ -217,8 +227,10 @@ if __name__ == "__main__":
                                              max_sentences=50)
     rel_sentences = list(rel_scrapper)
     sentence_scrapper.kill()
+    all_sentences = sentence_scrapper.get_sentences_returned()
 
     rel_sentences_ordered = relevancy_finder.find_most_relevant_sentence(query=query_to_pass,
+                                                                         all_sentences=all_sentences,
                                                                          rel_sentences=rel_sentences)
     pprint(rel_sentences_ordered)
 
