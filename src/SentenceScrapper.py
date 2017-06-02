@@ -1,13 +1,14 @@
 import re
 import time
+from pprint import pprint
 from threading import Thread, Lock
 
 import certifi
 import urllib3
 from bs4 import BeautifulSoup
-from gensim import corpora, models, similarities
-from nltk.corpus import stopwords
-from six import iteritems
+
+from RelevancyFinder import RelevancyFinder
+from RelevantSentencesScrapper import RelevantSentencesScrapper
 
 
 class SearchEngineLinkExtractor:
@@ -142,13 +143,13 @@ class SearchEngineScrapper:
         self.url_set = set()
         self.kill_flag = False
         search_words = self.search_query.split(" ")
-        ecosia_extractor = EcosiaLinkExtractor(search_words, 1)
+        ecosia_extractor = EcosiaLinkExtractor(search_words, 2)
         ecosia_thread = Thread(target=self.extract_paragraphs, args=(ecosia_extractor,))
-        bing_extractor = BingLinkExtractor(search_words, 1)
+        bing_extractor = BingLinkExtractor(search_words, 2)
         bing_thread = Thread(target=self.extract_paragraphs, args=(bing_extractor,))
-        yahoo_extractor = YahooLinkExtractor(search_words, 1)
+        yahoo_extractor = YahooLinkExtractor(search_words, 2)
         yahoo_thread = Thread(target=self.extract_paragraphs, args=(yahoo_extractor,))
-        ask_extractor = AskLinkExtractor(search_words, 1)
+        ask_extractor = AskLinkExtractor(search_words, 2)
         ask_thread = Thread(target=self.extract_paragraphs, args=(ask_extractor,))
         self.thread_list = [ecosia_thread, bing_thread, yahoo_thread, ask_thread]
         # Google extractor doesn't work atm
@@ -176,17 +177,20 @@ class SearchEngineScrapper:
         return self.paragraph_list.copy()
 
 
-class ParagraphScrapper:
+class SentenceScrapper:
     def __init__(self, query):
         self.query = query
         self.scrapper = SearchEngineScrapper(search_query=self.query)
         self.pattern = re.compile('[.][A-Z]')
+        self.dash_pattern = re.compile('[-]')
+        self.space_pattern = re.compile('\s+')
 
     def __iter__(self):
         while not self.scrapper.finished():
             if self.scrapper.has_n_paragraphs(1):
                 flushed = self.scrapper.flush_paragraphs()
                 for p in flushed:
+                    p = self.space_pattern.sub(' ', self.dash_pattern.sub(' ', p)).strip()
                     sentences = p.split('. ')
                     for s in sentences:
                         if re.search(self.pattern,
@@ -203,51 +207,20 @@ class ParagraphScrapper:
 
 if __name__ == "__main__":
     query_to_pass = "what is the depth of the mediterranean sea"
-    english_stopwords = set(stopwords.words('english'))
-    query_important_words = [word for word in query_to_pass.split() if word not in english_stopwords]
-    p_scrapper = ParagraphScrapper(query_to_pass)
-    rel_sentences = list()
-    my_iter = p_scrapper.__iter__()
 
+    relevancy_finder = RelevancyFinder()
+    query_important_words = relevancy_finder.important_query_words(query=query_to_pass)
+    query_important_joined = ' '.join(query_important_words)
+    sentence_scrapper = SentenceScrapper(query=query_important_joined)
 
-    def is_sentence_relevant(words, sentence):
-        percentage_to_be_relevant = 0.2  # we need to find the optimal percentage
-        counter = 0.0
-        for word in words:
-            if word in sentence:
-                counter += 1
-        if counter / len(words) >= percentage_to_be_relevant:
-            return True
+    rel_scrapper = RelevantSentencesScrapper(s_scrapper=sentence_scrapper, search_words=query_important_words,
+                                             max_sentences=50)
+    rel_sentences = list(rel_scrapper)
+    sentence_scrapper.kill()
 
-
-    while len(rel_sentences) < 50:
-        try:
-            next_sentence = next(my_iter)
-            if is_sentence_relevant(query_important_words, next_sentence):
-                rel_sentences.append(next_sentence)
-        except Exception as e:
-            break
-
-    dictionary = corpora.Dictionary(sent.lower().split() for sent in rel_sentences)
-    stop_ids = [dictionary.token2id[stopword] for stopword in english_stopwords
-                if stopword in dictionary.token2id]
-    once_ids = [tokenid for tokenid, docfreq in iteritems(dictionary.dfs) if docfreq == 1]
-    dictionary.filter_tokens(stop_ids + once_ids)  # remove stop words and words that appear only once
-    dictionary.compactify()  # remove gaps in id sequence after words that were removed
-    corpus_gen = (dictionary.doc2bow(sent.lower().split()) for sent in rel_sentences)
-    corpus_list = list(corpus_gen)
-    corpora.MmCorpus.serialize('results_corpus.mm', corpus_list)
-    corpus = corpora.MmCorpus('results_corpus.mm')
-
-    model_tfidf = models.TfidfModel(corpus)
-    corpus_tfidf = model_tfidf[corpus]
-    lsi_model = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=30)
-    query_vec = dictionary.doc2bow(query_to_pass.lower().split())
-    query_lsi = lsi_model[query_vec]
-    index = similarities.MatrixSimilarity(lsi_model[corpus])
-    sims = index[query_lsi]
-    sims = sorted(enumerate(sims), key=lambda item: -item[1])
-    print(corpus[sims[0]])
+    rel_sentences_ordered = relevancy_finder.find_most_relevant_sentence(query=query_to_pass,
+                                                                         rel_sentences=rel_sentences)
+    pprint(rel_sentences_ordered)
 
 
 def find_most_common_word(relevant_lines):
