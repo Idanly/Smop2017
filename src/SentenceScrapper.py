@@ -216,7 +216,7 @@ class SentenceScrapper:
 
 
 if __name__ == "__main__":
-    query_to_pass = "what is the name of the current president of the usa"
+    query_to_pass = "A Dining Chair With Arms Is Known As A What"
 
     relevancy_finder = RelevancyFinder()
     query_important_words = relevancy_finder.important_query_words(query=query_to_pass)
