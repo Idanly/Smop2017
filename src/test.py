@@ -12,7 +12,8 @@ def getHypernym(word_to_find):
     stopWords = set(stopwords.words('english'))
     if word_to_find in stopWords:
         return None
-    word = wn.synset(word_to_find + '.n.1')  # we assume it is the first definition because we cant do it better
+    """try:"""
+    word = wn.synset(word_to_find + 'n.1')  # we assume it is the first definition because we cant do it better
     root = word.root_hypernyms()[0]
     while (word != root):
         print('a')
@@ -24,12 +25,17 @@ def getHypernym(word_to_find):
     return None
 
 
-words = ['dog', 'Mozart', 'Monday']
+a = 'What was the number of member nations of the U.N. in 2000?'
+words = a.split()
 vector = []
-for i in range(12):
+question_words = ['What', 'Why', 'How', 'How much', 'How many' 'Where', 'When', 'Who', 'Which']
+for i in range(14):
     vector.append(0)
 for word in words:
-    index = getHypernym(word)
-    if index != None:
-        vector[index] = + 1
+    if word in question_words and vector[0] == 0:
+        vector[0] = question_words.index(word) + 1
+    else:
+        index = getHypernym(word)
+        if index != None:
+            vector[index] = + 1
 print(vector)
