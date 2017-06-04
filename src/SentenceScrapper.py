@@ -1,6 +1,5 @@
 import re
 import time
-from pprint import pprint
 from threading import Thread, Lock
 
 import certifi
@@ -216,7 +215,7 @@ class SentenceScrapper:
 
 
 if __name__ == "__main__":
-    query_to_pass = "A Dining Chair With Arms Is Known As A What"
+    query_to_pass = "what is melancholy"
 
     relevancy_finder = RelevancyFinder()
     query_important_words = relevancy_finder.important_query_words(query=query_to_pass)
@@ -224,29 +223,18 @@ if __name__ == "__main__":
     sentence_scrapper = SentenceScrapper(query=query_important_joined)
 
     rel_scrapper = RelevantSentencesScrapper(s_scrapper=sentence_scrapper, search_words=query_important_words,
-                                             max_sentences=50)
+                                             max_sentences=100)
     rel_sentences = list(rel_scrapper)
     sentence_scrapper.kill()
-    all_sentences = sentence_scrapper.get_sentences_returned()
+    print("relevant sentences found:")
+    for sent in rel_sentences:
+        print(sent)
+
+    # all_sentences = sentence_scrapper.get_sentences_returned()
 
     rel_sentences_ordered = relevancy_finder.find_most_relevant_sentence(query=query_to_pass,
-                                                                         all_sentences=all_sentences,
+                                                                         all_sentences=None,
                                                                          rel_sentences=rel_sentences)
-    pprint(rel_sentences_ordered)
-
-
-def find_most_common_word(relevant_lines):
-    relevant_words_from_class = {}
-    expected_class = query_to_pass.get_expected_class()  # we need to write this method
-    for line in relevant_lines:
-        words = line.split()
-        for word in words:  # we can change the counting method according to tf- udf
-            if word.getClass() == expected_class:  # we need to implement getClass()
-                if word in relevant_words_from_class:
-                    relevant_words_from_class[word] += 1
-                else:
-                    relevant_words_from_class[word] = 1
-    mostCommon = max(relevant_words_from_class.values())
-    for key in relevant_words_from_class.keys:
-        if relevant_words_from_class[key] == mostCommon:
-            return key
+    print("relevant sentences ordered:")
+    for sent in rel_sentences_ordered:
+        print(sent)
