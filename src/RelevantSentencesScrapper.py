@@ -1,3 +1,6 @@
+from gensim import corpora, models, matutils
+
+
 class RelevantSentencesScrapper:
     def __init__(self, s_scrapper, search_words, max_sentences=-1):
         self.search_words = search_words
@@ -5,6 +8,10 @@ class RelevantSentencesScrapper:
         self.sentences_returned = 0
         self.s_iter = s_scrapper.__iter__()
         self.returned_sentences = list()
+        self.lsi_model = models.LsiModel.load('lsi_model.lsi')
+        self.dictionary = corpora.Dictionary.load('questions_dict.dict')
+        self.similarity_hi_thresh = 1
+        self.similarity_low_thresh = 0.4
 
     def __iter__(self):
         while self.sentences_returned != self.max_sentences:
@@ -18,19 +25,16 @@ class RelevantSentencesScrapper:
                 break
 
     def is_sentence_relevant(self, words, sentence):
-        # Empty sentences are not good
-        if len(sentence) == 0:
-            return False
-        # Sentences that are contained in the query aren't good either
-        if all(word in words for word in sentence.split()):
-            return False
-        percentage_to_be_relevant = 0.4  # we need to find the optimal percentage
-        counter = 0.0
-        for word in words:
-            if word in sentence:
-                counter += 1
-        if counter / len(words) >= percentage_to_be_relevant:
-            return True
+        query_vec = self.dictionary.doc2bow(word.lower() for word in words)
+        query_lsi = self.lsi_model[query_vec]
+        sentence_vec = self.dictionary.doc2bow(sentence.lower().split())
+        sentence_lsi = self.lsi_model[sentence_vec]
+        similarity = self.cosine_similarity(query_lsi, sentence_lsi)
+
+        return self.similarity_hi_thresh > similarity > self.similarity_low_thresh
+
+    def cosine_similarity(self, first_lsi, second_lsi):
+        return matutils.cossim(first_lsi, second_lsi)
 
     def get_returned_sentences(self):
         return self.returned_sentences
