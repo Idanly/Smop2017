@@ -3,6 +3,9 @@ from nltk.corpus import stopwords
 
 
 # I need to find the problem with names and two words
+from nltk.corpus.reader import WordNetError
+
+
 def getHypernym(word_to_find):
     categories = {0: wn.synset('person.n.01'), 1: wn.synset('animal.n.01'), 2: wn.synset('color.n.01'),
                   3: wn.synset('country.n.01'), 4: wn.synset('city.n.01'), 5: wn.synset('year.n.01'),
@@ -12,24 +15,33 @@ def getHypernym(word_to_find):
     stopWords = set(stopwords.words('english'))
     if word_to_find in stopWords:
         return None
-    word = wn.synset(word_to_find + '.n.1')  # we assume it is the first definition because we cant do it better
-    root = word.root_hypernyms()[0]
-    while (word != root):
-        print('a')
-        if word in categories.values():
-            return (list(categories.keys())[list(categories.values()).index(word)])
-        word = word.hypernyms()[0]
-    if root in categories:
-        return (list(categories.keys())[list(categories.values()).index(root)])
-    return None
+    try:
+        word = wn.synset(word_to_find + 'n.1')  # we assume it is the first definition because we cant do it better
+        root = word.root_hypernyms()[0]
+        while word != root:
+            print('a')
+            if word in categories.values():
+                return list(categories.keys())[list(categories.values()).index(word)]
+            word = word.hypernyms()[0]
+        if root in categories:
+            return list(categories.keys())[list(categories.values()).index(root)]
+    except ValueError:
+        print("word " + word_to_find + " has no hypernym")
+        return None
+    except WordNetError as e:
+        print(str(e))
+        return None
 
 
 words = ['dog', 'Mozart', 'Monday']
 vector = []
 for i in range(12):
     vector.append(0)
-for word in words:
-    index = getHypernym(word)
-    if index != None:
-        vector[index] = + 1
+for _word in words:
+    if _word in question_words and vector[0] == 0:
+        vector[0] = question_words.index(_word) + 1
+    else:
+        index = getHypernym(_word)
+        if index != None:
+            vector[index] = + 1
 print(vector)

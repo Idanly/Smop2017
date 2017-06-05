@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from gensim import corpora, models
 from nltk.corpus import stopwords
 from six import iteritems
@@ -21,11 +19,10 @@ print(mm)
 corpus_tfidf = tfidf_model[mm]
 print("created corpus tfidf wrapper")
 
-lsi_model = models.LsiModel(mm, id2word=id2word, num_topics=100)  # May be subject to change
-print("created lsi model")
-lsi_model.save('lsi_model.lsi')
-pprint(lsi_model.show_topics(num_topics=10))
-
-corpus_lsi = lsi_model[corpus_tfidf]
-corpora.MmCorpus.serialize('corpus_lsi.mm', corpus_lsi)
-
+word2vec_model = models.Word2Vec(mm)
+print(word2vec_model)
+print(word2vec_model.wv.most_similar(positive=['woman', 'king'], negative=['man']))
+print(word2vec_model.wv.doesnt_match("breakfast cereal dinner lunch".split()))
+print(word2vec_model.wv.similarity('woman', 'man'))
+word2vec_model.save('wiki_word2vec.w2v')
+print("saved model")

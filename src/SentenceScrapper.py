@@ -1,6 +1,8 @@
 import re
 import time
+from multiprocessing import Pool
 from threading import Thread, Lock
+import os
 
 import certifi
 import urllib3
@@ -9,13 +11,14 @@ from bs4 import BeautifulSoup
 from RelevancyFinder import RelevancyFinder
 from RelevantSentencesScrapper import RelevantSentencesScrapper
 
+http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where(), timeout=3.0)
 
 class SearchEngineLinkExtractor:
     def __init__(self, search_words, num_pages=-1):
         self.search_words = search_words
         self.num_pages = num_pages
         self.page_counter = 0
-        self.http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where(), timeout=3.0)
+
         self.q = "+".join(self.search_words)
 
     def __iter__(self):
@@ -24,8 +27,8 @@ class SearchEngineLinkExtractor:
     def next_href(self):
         while self.page_counter != self.num_pages:
             curr_page_url = self.page_url()
-            request = self.http.request('GET', curr_page_url)
-            time.sleep(0.25)
+            request = http.request('GET', curr_page_url)
+            time.sleep(0.15)
             soup = BeautifulSoup(request.data, "lxml")
             page_hrefs = self.parse_page_hrefs(soup)
             yield page_hrefs
@@ -111,16 +114,15 @@ class GoogleLinkExtractor(SearchEngineLinkExtractor):
 
 class SearchEngineScrapper:
     def __init__(self, search_query):
-        self.http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where(), timeout=3.0)
         self.url_set = set()
-        self.paragraph_list = list()
+        self.url_list = list()
         self.search_query = search_query
-        self.lock = Lock()
+
         self.kill_flag = False
         self.thread_list = list()
         self.start_extraction()
 
-    def extract_paragraphs(self, link_extractor):
+    def extract_links(self, link_extractor):
         for links_list in link_extractor:
             for url in links_list:
                 if url not in self.url_set:
@@ -128,29 +130,21 @@ class SearchEngineScrapper:
                         print(link_extractor.__class__.__name__ + " was killed")
                         return
                     self.url_set.add(url)
-                    try:
-                        request = self.http.request('GET', url)
-                        time.sleep(0.1)
-                        soup = BeautifulSoup(request.data, "lxml")
-                        paragraphs = soup.find_all("p")
-                        with self.lock:
-                            self.paragraph_list.extend([p.text for p in paragraphs])
-                    except Exception as e:
-                        print("error from extract paragraphs: " + str(e))
+                    self.url_list.append(url)
 
     def start_extraction(self):
-        self.paragraph_list = list()
+        self.url_list = list()
         self.url_set = set()
         self.kill_flag = False
         search_words = self.search_query.split(" ")
         ecosia_extractor = EcosiaLinkExtractor(search_words, 2)
-        ecosia_thread = Thread(target=self.extract_paragraphs, args=(ecosia_extractor,))
+        ecosia_thread = Thread(target=self.extract_links, args=(ecosia_extractor,))
         bing_extractor = BingLinkExtractor(search_words, 2)
-        bing_thread = Thread(target=self.extract_paragraphs, args=(bing_extractor,))
+        bing_thread = Thread(target=self.extract_links, args=(bing_extractor,))
         yahoo_extractor = YahooLinkExtractor(search_words, 2)
-        yahoo_thread = Thread(target=self.extract_paragraphs, args=(yahoo_extractor,))
+        yahoo_thread = Thread(target=self.extract_links, args=(yahoo_extractor,))
         ask_extractor = AskLinkExtractor(search_words, 2)
-        ask_thread = Thread(target=self.extract_paragraphs, args=(ask_extractor,))
+        ask_thread = Thread(target=self.extract_links, args=(ask_extractor,))
         self.thread_list = [ecosia_thread, bing_thread, yahoo_thread, ask_thread]
         # Google extractor doesn't work atm
         ecosia_thread.start()
@@ -158,20 +152,86 @@ class SearchEngineScrapper:
         yahoo_thread.start()
         ask_thread.start()
 
+    def __iter__(self):
+        while (not self.finished()) or self.url_list:
+            try:
+                yield self.url_list.pop(0)
+            except IndexError:
+                yield ""
+
+    def finished(self):
+        return all(not thread.isAlive() for thread in self.thread_list)
+
+
+class ParagraphScrapper:
+    results_lock = Lock()
+    paragraph_lock = Lock()
+
+    def __init__(self, search_query):
+        self.paragraph_list = list()
+        self.search_query = search_query
+        self.link_extractor = SearchEngineScrapper(search_query=search_query)
+        self.kill_flag = False
+        self.results = list()
+        self.extraction_thread = Thread(target=self.start_extraction)
+        self.results_thread = Thread(target=self.get_results)
+        self.extraction_thread.start()
+        self.results_thread.start()
+
+    def start_extraction(self):
+        pool = Pool(processes=6)
+        for url in self.link_extractor:
+            if self.kill_flag:
+                pool.terminate()
+                return
+            if url is not "":
+                with ParagraphScrapper.results_lock:
+                    self.results.append(pool.apply_async(func=ParagraphScrapper.extract_paragraphs, args=(url,)))
+            else:
+                time.sleep(0.15)
+
+    def get_results(self):
+        while True:
+            if self.finished():
+                return
+            with ParagraphScrapper.results_lock:
+                copy_results = self.results.copy()
+                self.results.clear()
+            unfinished = list()
+            for res in copy_results:
+                if res.ready():
+                    with ParagraphScrapper.paragraph_lock:
+                        self.paragraph_list.extend(res.get())
+                else:
+                    unfinished.append(res)
+            with ParagraphScrapper.results_lock:
+                self.results.extend(unfinished)
+            time.sleep(0.2)
+
+    @staticmethod
+    def extract_paragraphs(url):
+        try:
+            request = http.request('GET', url)
+            soup = BeautifulSoup(request.data, "lxml")
+            paragraphs = soup.find_all("p")
+            return [p.text for p in paragraphs]
+        except Exception as e:
+            print("error from extract paragraphs: " + str(e))
+
     def flush_paragraphs(self):
-        with self.lock:
-            curr_paragraphs = self.paragraph_list
-            self.paragraph_list = list()
+        with self.paragraph_lock:
+            curr_paragraphs = self.paragraph_list.copy()
+            self.paragraph_list.clear()
         return curr_paragraphs
 
     def has_n_paragraphs(self, n):
         return len(self.paragraph_list) >= n
 
-    def finished(self):
-        return all(not thread.isAlive() for thread in self.thread_list)
-
     def kill(self):
         self.kill_flag = True
+
+    def finished(self):
+        return self.kill_flag or not(self.extraction_thread.is_alive() or self.results)
 
     def get_paragraphs(self):
         return self.paragraph_list.copy()
@@ -180,32 +240,36 @@ class SearchEngineScrapper:
 class SentenceScrapper:
     def __init__(self, query):
         self.query = query
-        self.scrapper = SearchEngineScrapper(search_query=self.query)
+        self.scrapper = ParagraphScrapper(search_query=self.query)
         self.pattern = re.compile('[.][A-Z]')
         self.dash_pattern = re.compile('[-]')
         self.space_pattern = re.compile('\s+')
-        self.forbidden_pattern = re.compile('http')  # We don't want a sentence with a link
+        self.forbidden_pattern = re.compile('http|\?')  # We don't want a sentence with a link or a question
         self.sentences_returned = list()
 
     def __iter__(self):
-        while not self.scrapper.finished():
-            if self.scrapper.has_n_paragraphs(1):
-                flushed = self.scrapper.flush_paragraphs()
-                for p in flushed:
+        while (not self.scrapper.finished()) or self.scrapper.has_n_paragraphs(1):
+            flushed = self.scrapper.flush_paragraphs()
+            if not flushed:
+                time.sleep(0.2)
+            for p in flushed:
+                try:
                     p = self.space_pattern.sub(' ', self.dash_pattern.sub(' ', p)).strip()
-                    sentences = p.split('. ')
-                    for s in sentences:
-                        if re.search(self.forbidden_pattern, s):
-                            continue
-                        if re.search(self.pattern,
-                                     s):  # There is a sentence starting right after a period (with no space)
-                            more_split = s.split('.')
-                            for t in more_split:
-                                self.sentences_returned.append(t)
-                                yield t
-                        else:
-                            self.sentences_returned.append(s)
-                            yield s
+                except TypeError as e:
+                    continue
+                sentences = p.split('. ')
+                for s in sentences:
+                    if re.search(self.forbidden_pattern, s):
+                        continue
+                    if re.search(self.pattern,
+                                 s):  # There is a sentence starting right after a period (with no space)
+                        more_split = s.split('.')
+                        for t in more_split:
+                            self.sentences_returned.append(t)
+                            yield t
+                    else:
+                        self.sentences_returned.append(s)
+                        yield s
 
     def kill(self):
         self.scrapper.kill()
@@ -215,26 +279,33 @@ class SentenceScrapper:
 
 
 if __name__ == "__main__":
-    query_to_pass = "what is melancholy"
+    query_to_pass = "when was marilyn monroe born"
 
     relevancy_finder = RelevancyFinder()
+    time1 = time.time()
     query_important_words = relevancy_finder.important_query_words(query=query_to_pass)
     query_important_joined = ' '.join(query_important_words)
+    print("Time to filter query: " + str(time.time() - time1))
+    time2 = time.time()
     sentence_scrapper = SentenceScrapper(query=query_important_joined)
-
+    print("Time to init sentence scrapper: " + str(time.time() - time2))
+    time3 = time.time()
     rel_scrapper = RelevantSentencesScrapper(s_scrapper=sentence_scrapper, search_words=query_important_words,
                                              max_sentences=100)
     rel_sentences = list(rel_scrapper)
+    print("Time to scrape relevant sentences: " + str(time.time() - time3))
     sentence_scrapper.kill()
-    print("relevant sentences found:")
+
+    print("relevant sentences:")
     for sent in rel_sentences:
         print(sent)
 
     # all_sentences = sentence_scrapper.get_sentences_returned()
-
+    """
     rel_sentences_ordered = relevancy_finder.find_most_relevant_sentence(query=query_to_pass,
                                                                          all_sentences=None,
                                                                          rel_sentences=rel_sentences)
     print("relevant sentences ordered:")
     for sent in rel_sentences_ordered:
         print(sent)
+    """

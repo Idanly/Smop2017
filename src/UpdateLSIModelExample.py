@@ -13,17 +13,17 @@ stopwords_with_questions = english_stopwords - question_words
 
 
 def create_corpus_gen():
-    return (dictionary.doc2bow(line.lower().split()) for line in open('wikipedia-crawler-master\philosophy.txt'))
+    return corpora.MmCorpus('questions_corpus.mm')
 
-
-model_tfidf = models.TfidfModel(create_corpus_gen())
+question_corpus = create_corpus_gen()
+model_tfidf = models.TfidfModel(question_corpus)
 print("created tfidf model")
-corpus_tfidf = model_tfidf[create_corpus_gen()]
+corpus_tfidf = model_tfidf[question_corpus]
 print("created tfidf of corpus")
 
 pprint(lsi_model.show_topics(num_topics=10))
-lsi_model.add_documents(corpus_tfidf)
+lsi_model.add_documents(corpus_tfidf, decay=0.6)
 print("added documents to lsi model")
 pprint(lsi_model.show_topics(num_topics=10))
 
-lsi_model.save('lsi_model.lsi')
+# lsi_model.save('lsi_model.lsi')

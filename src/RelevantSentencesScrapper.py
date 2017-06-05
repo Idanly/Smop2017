@@ -9,9 +9,10 @@ class RelevantSentencesScrapper:
         self.s_iter = s_scrapper.__iter__()
         self.returned_sentences = list()
         self.lsi_model = models.LsiModel.load('lsi_model.lsi')
-        self.dictionary = corpora.Dictionary.load('questions_dict.dict')
+        self.dictionary = corpora.Dictionary.load_from_text('D:/Documents/wiki_dump/_wordids.txt.bz2')
         self.similarity_hi_thresh = 1
-        self.similarity_low_thresh = 0.4
+        self.similarity_low_thresh = 0.6
+        print("init Relevant Sentences Scrapper")
 
     def __iter__(self):
         while self.sentences_returned != self.max_sentences:
@@ -29,11 +30,12 @@ class RelevantSentencesScrapper:
         query_lsi = self.lsi_model[query_vec]
         sentence_vec = self.dictionary.doc2bow(sentence.lower().split())
         sentence_lsi = self.lsi_model[sentence_vec]
-        similarity = self.cosine_similarity(query_lsi, sentence_lsi)
+        similarity = RelevantSentencesScrapper.cosine_similarity(query_lsi, sentence_lsi)
 
         return self.similarity_hi_thresh > similarity > self.similarity_low_thresh
 
-    def cosine_similarity(self, first_lsi, second_lsi):
+    @staticmethod
+    def cosine_similarity(first_lsi, second_lsi):
         return matutils.cossim(first_lsi, second_lsi)
 
     def get_returned_sentences(self):
