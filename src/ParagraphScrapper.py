@@ -92,6 +92,7 @@ class GoogleLinkExtractor(SearchEngineLinkExtractor):
     Google link extractor - DOES NOT WORK
     For some reason the openend page of this url is not the same page viewed in the browser
     """
+
     def page_url(self):
         start = "https://www.google.co.il/?gfe_rd=cr&ei=Pz8kWY_AE5Pd8AeOh67QBw#q="
         cont = "&start="
@@ -105,7 +106,6 @@ class GoogleLinkExtractor(SearchEngineLinkExtractor):
 
 
 class SearchEngineScrapper:
-
     def __init__(self, search_query):
         self.http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where(), timeout=3.0)
         self.url_set = set()
@@ -184,3 +184,34 @@ if __name__ == "__main__":
     posttime = time.time()
     print("time diff: " + str(posttime - pretime))
     print(paragraphs)
+
+
+def find_relevant_sentences(paragraphs):
+    lines = paragraphs.split(".");
+    relevant_lines = [];
+    words = query_to_pass.split();
+    percentage_to_be_relevant = 0.2  # we need to find the optimal percentage
+    for line in lines:  # runs through the lines and checks whether a line is relevant to the query
+        counter = 0;
+        for word in words:
+            if word in line:
+                counter = counter + 1
+        if counter / len(words) >= percentage_to_be_relevant:
+            relevant_lines.append(line)
+
+
+def find_most_common_word(relevant_lines):
+    relevant_words_from_class = {}
+    expected_class = query_to_pass.get_expected_class()  # we need to write this method
+    for line in relevant_lines:
+        words = line.split()
+        for word in words:  # we can change the counting method according to tf- udf
+            if word.getClass() == expected_class:  # we need to implement getClass()
+                if word in relevant_words_from_class:
+                    relevant_words_from_class[word] = relevant_words_from_class[word] + 1
+                else:
+                    relevant_words_from_class[word] = 1
+    mostCommon = max(relevant_words_from_class.values())
+    for key in relevant_words_from_class.keys:
+        if relevant_words_from_class[key] == mostCommon:
+            return key
