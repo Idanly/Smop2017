@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4421889f-95b9-4bb7-82a8-ba895a84075b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lsi_model.lsi.projection" afterPath="" />
+    <list default="true" id="4421889f-95b9-4bb7-82a8-ba895a84075b" name="Default" comment="Added word ids to directory">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/word2vec_model.w2v" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/UpdateWord2VecModel.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/num_sentences_returned.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/sentences_returned.txt" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lsi_model.lsi" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lsi_model.lsi.projection.bz2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wikipedia-crawler-master/example_output/biology_english.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wikipedia-crawler-master/example_output/biology_greek.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wikipedia-crawler-master/example_output/biology_japanese.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wikipedia-crawler-master/example_output/biology_korean.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wikipedia-crawler-master/example_output/biology_latin.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wikipedia-crawler-master/example_output/biology_ukrainian.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wikipedia-crawler-master/example_output/biology_venetian.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/wikipedia-crawler-master/philosophy.txt" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BuildWord2VecModel.py" afterPath="$PROJECT_DIR$/src/BuildWord2VecModel.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RelevancyFinder.py" afterPath="$PROJECT_DIR$/src/RelevancyFinder.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RelevantSentencesScrapper.py" afterPath="$PROJECT_DIR$/src/RelevantSentencesScrapper.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SentenceScrapper.py" afterPath="$PROJECT_DIR$/src/SentenceScrapper.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/UpdateLSIModelExample.py" afterPath="$PROJECT_DIR$/src/UpdateLSIModelExample.py" />
     </list>
     <ignored path="Smop2017.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -22,87 +41,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SentenceScrapper.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SentenceScrapper.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SentenceScrapper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="281" column="49" selection-start-line="281" selection-start-column="49" selection-end-line="281" selection-end-column="49" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1">
+              <caret line="309" column="38" selection-start-line="309" selection-start-column="38" selection-end-line="318" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RelevantSentencesScrapper.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UpdateWord2VecModel.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UpdateWord2VecModel.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="109">
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RelevantSentencesScrapper.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RelevantSentencesScrapper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="22" column="65" selection-start-line="22" selection-start-column="65" selection-end-line="22" selection-end-column="65" />
+            <state relative-caret-position="253">
+              <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="questions_unified.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Texts/questions_unified.txt">
+      <file leaf-file-name="num_sentences_returned.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/num_sentences_returned.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="6282" column="19" selection-start-line="6282" selection-start-column="19" selection-end-line="6282" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BuildLSIModel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/BuildLSIModel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BuildWord2VecModel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/BuildWord2VecModel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#34#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UpdateLSIModelExample.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/UpdateLSIModelExample.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="matutils.py" pinned="false" current-in-tab="false">
-        <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/matutils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13176">
-              <caret line="748" column="44" selection-start-line="748" selection-start-column="44" selection-end-line="748" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FixDict.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/FixDict.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="89" />
+              <caret line="0" column="3" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -111,8 +84,8 @@
       <file leaf-file-name="RelevancyFinder.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RelevancyFinder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+            <state relative-caret-position="0">
+              <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -157,15 +130,17 @@
         <option value="$PROJECT_DIR$/src/BuildModelWord2Vec.py" />
         <option value="$PROJECT_DIR$/src/wikipedia-crawler-master/wikipedia-crawler.py" />
         <option value="$PROJECT_DIR$/src/DictWithLSIModel.py" />
-        <option value="$PROJECT_DIR$/src/RelevancyFinder.py" />
         <option value="$PROJECT_DIR$/src/classifyQuestions.py" />
         <option value="$PROJECT_DIR$/src/test.py" />
         <option value="$PROJECT_DIR$/src/BuildLSIModel.py" />
         <option value="$PROJECT_DIR$/src/FixDict.py" />
-        <option value="$PROJECT_DIR$/src/SentenceScrapper.py" />
         <option value="$PROJECT_DIR$/src/UpdateLSIModelExample.py" />
         <option value="$PROJECT_DIR$/src/BuildWord2VecModel.py" />
+        <option value="$PROJECT_DIR$/src/RelevancyFinder.py" />
+        <option value="$PROJECT_DIR$/src/UpdateWord2VecModel.py" />
+        <option value="$PROJECT_DIR$/src/num_sentences_returned.txt" />
         <option value="$PROJECT_DIR$/src/RelevantSentencesScrapper.py" />
+        <option value="$PROJECT_DIR$/src/SentenceScrapper.py" />
       </list>
     </option>
   </component>
@@ -200,8 +175,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -262,12 +235,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ignore" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Smop2017" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Smop2017" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java_stuff" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -276,12 +269,15 @@
     <property name="last_opened_file_path" value="D:/pogrem/Anaconda/envs/tensorflow/python.exe" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Documents\intro2cs\Smop2017\src\Ignore\Do not touch" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Documents\intro2cs\Smop2017\src\Texts" />
       <recent name="D:\Documents\intro2cs\Smop2017\java_stuff" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.BuildWord2VecModel">
+  <component name="RunManager" selected="Python.SentenceScrapper">
     <configuration default="false" name="SentenceScrapper" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -295,23 +291,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Smop2017" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/SentenceScrapper.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="BuildLSIModel" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Smop2017" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/BuildLSIModel.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -363,6 +342,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Smop2017" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/BuildWord2VecModel.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="UpdateWord2VecModel" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Smop2017" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/UpdateWord2VecModel.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -503,18 +499,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.SentenceScrapper" />
-      <item index="1" class="java.lang.String" itemvalue="Python.BuildLSIModel" />
-      <item index="2" class="java.lang.String" itemvalue="Python.FixDict" />
-      <item index="3" class="java.lang.String" itemvalue="Python.UpdateLSIModelExample" />
-      <item index="4" class="java.lang.String" itemvalue="Python.BuildWord2VecModel" />
+      <item index="1" class="java.lang.String" itemvalue="Python.FixDict" />
+      <item index="2" class="java.lang.String" itemvalue="Python.UpdateLSIModelExample" />
+      <item index="3" class="java.lang.String" itemvalue="Python.BuildWord2VecModel" />
+      <item index="4" class="java.lang.String" itemvalue="Python.UpdateWord2VecModel" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.BuildWord2VecModel" />
-        <item index="1" class="java.lang.String" itemvalue="Python.UpdateLSIModelExample" />
-        <item index="2" class="java.lang.String" itemvalue="Python.SentenceScrapper" />
-        <item index="3" class="java.lang.String" itemvalue="Python.FixDict" />
-        <item index="4" class="java.lang.String" itemvalue="Python.BuildLSIModel" />
+        <item index="0" class="java.lang.String" itemvalue="Python.SentenceScrapper" />
+        <item index="1" class="java.lang.String" itemvalue="Python.UpdateWord2VecModel" />
+        <item index="2" class="java.lang.String" itemvalue="Python.BuildWord2VecModel" />
+        <item index="3" class="java.lang.String" itemvalue="Python.UpdateLSIModelExample" />
+        <item index="4" class="java.lang.String" itemvalue="Python.FixDict" />
       </list>
     </recent_temporary>
   </component>
@@ -590,11 +586,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.5208333" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.49702382" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36437908" sideWeight="0.4672619" order="2" side_tool="false" content_ui="tabs" />
@@ -607,7 +604,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.49702382" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -643,34 +639,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/java_stuff/QuerySearch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SentenceScrapper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/java_stuff/QuerySearch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SentenceScrapper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/java_stuff/QuerySearch.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5580">
@@ -769,26 +737,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="814" column="0" selection-start-line="814" selection-start-column="0" selection-end-line="814" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/models/tfidfmodel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="389">
           <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/nltk/corpus/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -813,13 +765,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="347">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TriviaQuestionsCrawler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -862,14 +807,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RelevancyFinder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/FixDict.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -885,64 +822,130 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/matutils.py">
+    <entry file="file://$PROJECT_DIR$/src/BuildLSIModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13176">
-          <caret line="748" column="44" selection-start-line="748" selection-start-column="44" selection-end-line="748" selection-end-column="44" />
+        <state relative-caret-position="72">
+          <caret line="8" column="52" selection-start-line="8" selection-start-column="52" selection-end-line="8" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#25#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/models/lsimodel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="509" column="0" selection-start-line="509" selection-start-column="0" selection-end-line="509" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UpdateLSIModelExample.py">
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/models/word2vec.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="126">
+          <caret line="1483" column="0" selection-start-line="1483" selection-start-column="0" selection-end-line="1483" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/nltk/corpus/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="175" column="13" selection-start-line="175" selection-start-column="13" selection-end-line="175" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TriviaQuestionsCrawler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/matutils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="428" column="7" selection-start-line="428" selection-start-column="7" selection-end-line="428" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/BuildWord2VecModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="81" />
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
+            <element signature="e#0#34#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/BuildLSIModel.py">
+    <entry file="file://$PROJECT_DIR$/src/RelevancyFinder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+        <state relative-caret-position="0">
+          <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UpdateLSIModelExample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#25#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Texts/questions_unified.txt">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="1452" column="0" selection-start-line="1452" selection-start-column="0" selection-end-line="1452" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UpdateWord2VecModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RelevantSentencesScrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/num_sentences_returned.txt">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="6282" column="19" selection-start-line="6282" selection-start-column="19" selection-end-line="6282" selection-end-column="19" />
+          <caret line="0" column="3" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SentenceScrapper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="281" column="49" selection-start-line="281" selection-start-column="49" selection-end-line="281" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RelevantSentencesScrapper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="22" column="65" selection-start-line="22" selection-start-column="65" selection-end-line="22" selection-end-column="65" />
+        <state relative-caret-position="1">
+          <caret line="309" column="38" selection-start-line="309" selection-start-column="38" selection-end-line="318" selection-end-column="0" />
           <folding />
         </state>
       </provider>

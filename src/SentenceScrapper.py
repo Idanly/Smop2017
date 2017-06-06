@@ -1,17 +1,24 @@
+import warnings
+
+warnings.simplefilter("ignore", UserWarning)
+
 import re
 import time
+import unicodedata
 from multiprocessing import Pool
 from threading import Thread, Lock
-import os
+import sys
 
 import certifi
 import urllib3
 from bs4 import BeautifulSoup
 
-from RelevancyFinder import RelevancyFinder
+from RelevancyFinder import important_query_words
 from RelevantSentencesScrapper import RelevantSentencesScrapper
+import UpdateWord2VecModel
 
 http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where(), timeout=3.0)
+
 
 class SearchEngineLinkExtractor:
     def __init__(self, search_words, num_pages=-1):
@@ -137,13 +144,13 @@ class SearchEngineScrapper:
         self.url_set = set()
         self.kill_flag = False
         search_words = self.search_query.split(" ")
-        ecosia_extractor = EcosiaLinkExtractor(search_words, 2)
+        ecosia_extractor = EcosiaLinkExtractor(search_words, 1)
         ecosia_thread = Thread(target=self.extract_links, args=(ecosia_extractor,))
-        bing_extractor = BingLinkExtractor(search_words, 2)
+        bing_extractor = BingLinkExtractor(search_words, 1)
         bing_thread = Thread(target=self.extract_links, args=(bing_extractor,))
-        yahoo_extractor = YahooLinkExtractor(search_words, 2)
+        yahoo_extractor = YahooLinkExtractor(search_words, 1)
         yahoo_thread = Thread(target=self.extract_links, args=(yahoo_extractor,))
-        ask_extractor = AskLinkExtractor(search_words, 2)
+        ask_extractor = AskLinkExtractor(search_words, 1)
         ask_thread = Thread(target=self.extract_links, args=(ask_extractor,))
         self.thread_list = [ecosia_thread, bing_thread, yahoo_thread, ask_thread]
         # Google extractor doesn't work atm
@@ -179,7 +186,7 @@ class ParagraphScrapper:
         self.results_thread.start()
 
     def start_extraction(self):
-        pool = Pool(processes=6)
+        pool = Pool(processes=10)
         for url in self.link_extractor:
             if self.kill_flag:
                 pool.terminate()
@@ -201,7 +208,10 @@ class ParagraphScrapper:
             for res in copy_results:
                 if res.ready():
                     with ParagraphScrapper.paragraph_lock:
-                        self.paragraph_list.extend(res.get())
+                        try:
+                            self.paragraph_list.extend(res.get())
+                        except TypeError:
+                            pass
                 else:
                     unfinished.append(res)
             with ParagraphScrapper.results_lock:
@@ -231,7 +241,7 @@ class ParagraphScrapper:
         self.kill_flag = True
 
     def finished(self):
-        return self.kill_flag or not(self.extraction_thread.is_alive() or self.results)
+        return self.kill_flag or not (self.extraction_thread.is_alive() or self.results)
 
     def get_paragraphs(self):
         return self.paragraph_list.copy()
@@ -244,8 +254,10 @@ class SentenceScrapper:
         self.pattern = re.compile('[.][A-Z]')
         self.dash_pattern = re.compile('[-]')
         self.space_pattern = re.compile('\s+')
+        self.remove_pattern = re.compile('\[[0-9]+\]|\(|\)|"|\'|,|\*')
         self.forbidden_pattern = re.compile('http|\?')  # We don't want a sentence with a link or a question
-        self.sentences_returned = list()
+        self.sentences_returned = open('sentences_returned.txt', 'wb')
+        self.num_sentences_returned = 0
 
     def __iter__(self):
         while (not self.scrapper.finished()) or self.scrapper.has_n_paragraphs(1):
@@ -254,7 +266,8 @@ class SentenceScrapper:
                 time.sleep(0.2)
             for p in flushed:
                 try:
-                    p = self.space_pattern.sub(' ', self.dash_pattern.sub(' ', p)).strip()
+                    p = self.space_pattern.sub(' ',
+                                               self.dash_pattern.sub(' ', self.remove_pattern.sub('', p))).strip()
                 except TypeError as e:
                     continue
                 sentences = p.split('. ')
@@ -265,25 +278,27 @@ class SentenceScrapper:
                                  s):  # There is a sentence starting right after a period (with no space)
                         more_split = s.split('.')
                         for t in more_split:
-                            self.sentences_returned.append(t)
+                            self.sentences_returned.write(
+                                unicodedata.normalize('NFD', t + '\n').encode('ascii', 'ignore'))
+                            self.num_sentences_returned += 1
                             yield t
                     else:
-                        self.sentences_returned.append(s)
+                        self.sentences_returned.write(unicodedata.normalize('NFD', s + '\n').encode('ascii', 'ignore'))
+                        self.num_sentences_returned += 1
                         yield s
 
     def kill(self):
         self.scrapper.kill()
+        open('num_sentences_returned.txt', 'w').write(str(self.num_sentences_returned))
+        self.sentences_returned.close()
 
-    def get_sentences_returned(self):
-        return self.sentences_returned
 
+def find_answer(question):
+    query_to_pass = re.sub(r'\W+', '', question.lower())
+    # query_to_pass = "what is the depth of the mediterranean sea"
 
-if __name__ == "__main__":
-    query_to_pass = "when was marilyn monroe born"
-
-    relevancy_finder = RelevancyFinder()
     time1 = time.time()
-    query_important_words = relevancy_finder.important_query_words(query=query_to_pass)
+    query_important_words = important_query_words(query=query_to_pass)
     query_important_joined = ' '.join(query_important_words)
     print("Time to filter query: " + str(time.time() - time1))
     time2 = time.time()
@@ -300,12 +315,9 @@ if __name__ == "__main__":
     for sent in rel_sentences:
         print(sent)
 
+    UpdateWord2VecModel.run()
+
+if __name__ == "__main__":
+    find_answer()
+
     # all_sentences = sentence_scrapper.get_sentences_returned()
-    """
-    rel_sentences_ordered = relevancy_finder.find_most_relevant_sentence(query=query_to_pass,
-                                                                         all_sentences=None,
-                                                                         rel_sentences=rel_sentences)
-    print("relevant sentences ordered:")
-    for sent in rel_sentences_ordered:
-        print(sent)
-    """
