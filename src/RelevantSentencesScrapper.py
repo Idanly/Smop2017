@@ -18,7 +18,13 @@ class RelevantSentencesScrapper:
         self.lsi_model = models.LsiModel.load('Ignore\lsi_model.lsi')
         self.dictionary = corpora.Dictionary.load_from_text('_wordids.txt.bz2')
         """
-        self.word2vec_model = models.Word2Vec.load('word2vec_model.w2v')
+        print("About to load word2vec model...")
+        # self.word2vec_model = models.KeyedVectors.load_word2vec_format('Ignore/GoogleNews-vectors-negative300.bin',
+        #                                                               binary=True)
+
+        self.word2vec_model = models.KeyedVectors.load_word2vec_format('Ignore\word2vec_6B.100d.w2v',
+                                                                       binary=False)
+
         self.similarity_hi_thresh = 1
         self.similarity_low_thresh = 0.6
         print("init Relevant Sentences Scrapper")
@@ -47,7 +53,8 @@ class RelevantSentencesScrapper:
             try:
                 sentence_vec += self.word2vec_model[word]
             except KeyError:
-                print("word: " + word + " not in model")
+                # print("word: " + word + " not in model")
+                continue
         """
         query_lsi = self.lsi_model[query_vec]
         sentence_vec = self.dictionary.doc2bow(sentence.lower().split())
@@ -66,7 +73,6 @@ class RelevantSentencesScrapper:
             return float(result)
         except RuntimeWarning:
             return 0
-
 
     def get_returned_sentences(self):
         return self.returned_sentences

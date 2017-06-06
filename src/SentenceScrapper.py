@@ -6,6 +6,7 @@ import re
 import time
 import unicodedata
 from multiprocessing import Pool
+import multiprocessing
 from threading import Thread, Lock
 import sys
 
@@ -144,13 +145,13 @@ class SearchEngineScrapper:
         self.url_set = set()
         self.kill_flag = False
         search_words = self.search_query.split(" ")
-        ecosia_extractor = EcosiaLinkExtractor(search_words, 1)
+        ecosia_extractor = EcosiaLinkExtractor(search_words, 3)
         ecosia_thread = Thread(target=self.extract_links, args=(ecosia_extractor,))
-        bing_extractor = BingLinkExtractor(search_words, 1)
+        bing_extractor = BingLinkExtractor(search_words, 3)
         bing_thread = Thread(target=self.extract_links, args=(bing_extractor,))
-        yahoo_extractor = YahooLinkExtractor(search_words, 1)
+        yahoo_extractor = YahooLinkExtractor(search_words, 3)
         yahoo_thread = Thread(target=self.extract_links, args=(yahoo_extractor,))
-        ask_extractor = AskLinkExtractor(search_words, 1)
+        ask_extractor = AskLinkExtractor(search_words, 3)
         ask_thread = Thread(target=self.extract_links, args=(ask_extractor,))
         self.thread_list = [ecosia_thread, bing_thread, yahoo_thread, ask_thread]
         # Google extractor doesn't work atm
@@ -294,7 +295,8 @@ class SentenceScrapper:
 
 
 def find_answer(question):
-    query_to_pass = re.sub(r'\W+', '', question.lower())
+    query_to_pass = re.sub(r'\W+', ' ', question.lower()).strip()
+    print("passing query: " + query_to_pass)
     # query_to_pass = "what is the depth of the mediterranean sea"
 
     time1 = time.time()
@@ -307,8 +309,10 @@ def find_answer(question):
     time3 = time.time()
     rel_scrapper = RelevantSentencesScrapper(s_scrapper=sentence_scrapper, search_words=query_important_words,
                                              max_sentences=100)
+    print("Time to init relevant sentences: " + str(time.time() - time3))
+    time4 = time.time()
     rel_sentences = list(rel_scrapper)
-    print("Time to scrape relevant sentences: " + str(time.time() - time3))
+    print("Time to scrape relevant sentences: " + str(time.time() - time4))
     sentence_scrapper.kill()
 
     print("relevant sentences:")
@@ -318,6 +322,7 @@ def find_answer(question):
     UpdateWord2VecModel.run()
 
 if __name__ == "__main__":
-    find_answer()
+    multiprocessing.freeze_support()
+    find_answer(sys.argv[1])
 
     # all_sentences = sentence_scrapper.get_sentences_returned()
