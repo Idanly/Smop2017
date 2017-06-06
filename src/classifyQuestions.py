@@ -5,14 +5,13 @@ from nltk.stem.snowball import SnowballStemmer
 import inflection
 
 
-class QuestToClassify:
-    def __init__(self, question):
-        self.quest = question
+class classifyQuestions:
+    def __init__(self):
         self.flag = False
 
-    def createQuestionVector(self):
+    def createQuestionVector(self, question):
         numOfFields = 15
-        words = self.quest.split(" ")
+        words = question.split(" ")
         vector = []
         question_words = ['jhjh', 'What', 'Why', 'How', 'Where', 'When', 'Who', 'How much', 'How many', 'Which']
         if words[0] == 'What' or words[0] == 'How' or words[0] == 'Which':
@@ -30,7 +29,7 @@ class QuestToClassify:
                 else:
                     vector[0] = question_words.index(word)
             elif word != 'much' or word != 'many':
-                index = self.getHypernym(word)
+                index = self.getHypernym(word, question)
                 if index != None:
                     if self.flag == False:
                         vector[index] = vector[index] + 2
@@ -39,11 +38,11 @@ class QuestToClassify:
                         vector[index] = vector[index] + 1
         return vector
 
-    def getHypernym(self, word_to_find):
+    def getHypernym(self, word_to_find, question):
         stopWords = set(stopwords.words('english'))
         if word_to_find in stopWords or word_to_find == 'was' or word_to_find == 'were':
             return None
-        text = self.quest.split()
+        text = question.split()
         index = text.index(word_to_find)
         temp = pos_tag(text)
         if temp[index][1] == 'VBP' or temp[index][1] == 'VBD' or temp[index][1] == 'VBZ' or temp[index][1] == 'VBN' or \
@@ -97,7 +96,12 @@ class QuestToClassify:
                 return None
             if word in categories.values():
                 return (list(categories.keys())[list(categories.values()).index(word)])
-            word = word.hypernyms()[0]
+            try:
+                word = word.hypernyms()[0]
+            except IndexError as e:
+                print("Index error: " + str(e))
+                print("Word with no hypernyms: " + word)
+                return None
         if root[0] in categories.values():
             return (list(categories.keys())[list(categories.values()).index(root)])
         return None
