@@ -257,7 +257,7 @@ class SentenceScrapper:
         self.space_pattern = re.compile('\s+')
         self.remove_pattern = re.compile('\[[0-9]+\]|\(|\)|"|\'|,|\*')
         self.forbidden_pattern = re.compile('http|\?')  # We don't want a sentence with a link or a question
-        self.sentences_returned = open('sentences_returned.txt', 'wb')
+        self.sentences_returned = open('Ignore\sentences_returned.txt', 'wb')
         self.num_sentences_returned = 0
 
     def __iter__(self):
@@ -290,7 +290,7 @@ class SentenceScrapper:
 
     def kill(self):
         self.scrapper.kill()
-        open('num_sentences_returned.txt', 'w').write(str(self.num_sentences_returned))
+        open('Ignore\num_sentences_returned.txt', 'w').write(str(self.num_sentences_returned))
         self.sentences_returned.close()
 
 

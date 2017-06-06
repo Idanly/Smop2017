@@ -5,10 +5,10 @@ def run():
     word2vec_model = models.Word2Vec.load('word2vec_model.w2v')
 
     def more_sentences():
-        return (line.lower().split() for line in open('sentences_returned.txt'))
+        return (line.lower().split() for line in open('Ignore\sentences_returned.txt'))
 
     word2vec_model.build_vocab(more_sentences(), update=True)
-    num_sentences_returned = int(open('num_sentences_returned.txt').readline())
+    num_sentences_returned = int(open('Ignore\/num_sentences_returned.txt').readline())
     word2vec_model.train(more_sentences(), total_examples=num_sentences_returned)
 
     word2vec_model.save('word2vec_model.w2v')
