@@ -96,7 +96,12 @@ class classifyQuestions:
                 return None
             if word in categories.values():
                 return (list(categories.keys())[list(categories.values()).index(word)])
-            word = word.hypernyms()[0]
+            try:
+                word = word.hypernyms()[0]
+            except IndexError as e:
+                print("Index error: " + str(e))
+                print("Word with no hypernyms: " + word)
+                return None
         if root[0] in categories.values():
             return (list(categories.keys())[list(categories.values()).index(root)])
         return None

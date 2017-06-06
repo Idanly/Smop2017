@@ -290,7 +290,7 @@ class SentenceScrapper:
 
     def kill(self):
         self.scrapper.kill()
-        open('Ignore\num_sentences_returned.txt', 'w').write(str(self.num_sentences_returned))
+        open('Ignore\/num_sentences_returned.txt', 'w').write(str(self.num_sentences_returned))
         self.sentences_returned.close()
 
 
@@ -316,8 +316,10 @@ def find_answer(question):
     sentence_scrapper.kill()
 
     print("relevant sentences:")
+    for sent in rel_sentences:
+        print(sent)
 
-    UpdateWord2VecModel.run()
+    # UpdateWord2VecModel.run()
     return rel_sentences
 
 if __name__ == "__main__":

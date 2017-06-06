@@ -33,14 +33,15 @@ class RelevantSentencesScrapper:
         while self.sentences_returned != self.max_sentences:
             try:
                 next_sentence = next(self.s_iter)
-                if self.is_sentence_relevant(self.search_words, next_sentence):
+                similarity = self.sentence_similarity(self.search_words, next_sentence)
+                if self.similarity_hi_thresh > similarity > self.similarity_low_thresh:
                     self.sentences_returned += 1
-                    self.returned_sentences.append(next_sentence)
-                    yield next_sentence
+                    self.returned_sentences.append((next_sentence, similarity))
+                    yield (next_sentence, similarity)
             except StopIteration:
                 break
 
-    def is_sentence_relevant(self, words, sentence):
+    def sentence_similarity(self, words, sentence):
         query_vec = np.zeros((100,))
         for word in words:
             try:
@@ -63,7 +64,7 @@ class RelevantSentencesScrapper:
         similarity = RelevantSentencesScrapper.cosine_similarity(query_vec, sentence_vec)
         if similarity < self.similarity_low_thresh:
             print("unsimilar sentence: " + sentence)
-        return self.similarity_hi_thresh > similarity > self.similarity_low_thresh
+        return similarity
 
     @staticmethod
     def cosine_similarity(first_np_vec, second_np_vec):
