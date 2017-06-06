@@ -1,43 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4421889f-95b9-4bb7-82a8-ba895a84075b" name="Default" comment="Added word ids to directory">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bfg-1.12.15.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsoup-1.10.2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/_wordids.txt.bz2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/questions_corpus.mm.index" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/questions_dict.dict" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/wiki_dict.dict" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/word2vec_model.w2v" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/BuildLSIModel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/BuildWord2VecModel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/FixDict.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/LSI model coordinates example.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/QuestionCorpusDictionary.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/QuestionParser.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/RelevancyFinder.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/RelevantSentencesScrapper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/SentenceScrapper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Texts/questions_unified.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TrecQuestionsScrapper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TriviaQuestionsCrawler.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/UpdateLSIModelExample.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/UpdateWord2VecModel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/num_sentences_returned.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/questions_corpus.mm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/sentences_returned.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/trec-8.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/trec-9.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/trec_questions.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tutorial/tutorial/spiders/AuthorSpider.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tutorial/tutorial/spiders/SearchEngineSpider.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ParagraphScrapper.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Smop2017.iml" afterPath="$PROJECT_DIR$/Smop2017.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test.py" afterPath="$PROJECT_DIR$/src/test.py" />
-    </list>
+    <list default="true" id="4421889f-95b9-4bb7-82a8-ba895a84075b" name="Default" comment="Added word ids to directory" />
     <ignored path="Smop2017.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -150,7 +114,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -193,31 +157,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Ignore" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Smop2017" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Smop2017" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="java_stuff" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -543,9 +489,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.5208333" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -628,13 +574,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/pogrem/Anaconda/Lib/site-packages/bs4/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7496">
-          <caret line="511" column="22" selection-start-line="511" selection-start-column="22" selection-end-line="511" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/pogrem/Anaconda/Lib/site-packages/bs4/__init__.py" />
     <entry file="file://$PROJECT_DIR$/tutorial/tutorial/spiders/__init__.py" />
     <entry file="file://$PROJECT_DIR$/xgoogle/examples/example1.py" />
     <entry file="file://$PROJECT_DIR$/README.md">
@@ -665,14 +605,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-852845281/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="3540" column="6" selection-start-line="3540" selection-start-column="6" selection-end-line="3540" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-852845281/builtins.py" />
     <entry file="file://$PROJECT_DIR$/src/TrecQuestionsScrapper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -680,42 +613,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/bs4/element.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="724" column="22" selection-start-line="724" selection-start-column="8" selection-end-line="724" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/six.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="597" column="8" selection-start-line="597" selection-start-column="8" selection-end-line="597" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/models/tfidfmodel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/corpora/dictionary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/bs4/element.py" />
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/six.py" />
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/models/tfidfmodel.py" />
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/corpora/dictionary.py" />
     <entry file="file://$PROJECT_DIR$/src/wikipedia-crawler-master/all-languages-crawler.py" />
-    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-852845281/unicodedata.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-852845281/unicodedata.py" />
     <entry file="file://$PROJECT_DIR$/src/wikipedia-crawler-master/wikipedia-crawler.py" />
     <entry file="file://$PROJECT_DIR$/src/QuestionCorpusDictionary.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -749,13 +652,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/multiprocessing/pool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="315" column="8" selection-start-line="315" selection-start-column="8" selection-end-line="315" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/multiprocessing/pool.py" />
     <entry file="file://$PROJECT_DIR$/src/FixDict.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -770,58 +667,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/models/lsimodel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="509" column="0" selection-start-line="509" selection-start-column="0" selection-end-line="509" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/models/word2vec.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="1483" column="0" selection-start-line="1483" selection-start-column="0" selection-end-line="1483" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/nltk/corpus/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="175" column="13" selection-start-line="175" selection-start-column="13" selection-end-line="175" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/models/lsimodel.py" />
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/models/word2vec.py" />
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/utils.py" />
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/nltk/corpus/__init__.py" />
     <entry file="file://$PROJECT_DIR$/src/TriviaQuestionsCrawler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/matutils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="428" column="7" selection-start-line="428" selection-start-column="7" selection-end-line="428" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/pogrem/Anaconda/envs/tensorflow/Lib/site-packages/gensim/matutils.py" />
     <entry file="file://$PROJECT_DIR$/src/BuildWord2VecModel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#34#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -829,7 +690,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -844,7 +704,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="3" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -852,7 +711,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="323" column="0" selection-start-line="323" selection-start-column="0" selection-end-line="323" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -860,7 +718,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="422">
           <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -868,7 +725,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -876,7 +732,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -884,9 +739,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
