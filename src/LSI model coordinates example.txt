@@ -1,0 +1,40 @@
+[(0,
+  '0.702*"fear" + 0.646*"what" + 0.152*"known" + 0.128*"capital" + '
+  '0.095*"name" + 0.053*"first" + 0.052*"called" + 0.052*"country" + '
+  '0.049*"which" + 0.044*"group"'),
+ (1,
+  '-0.692*"fear" + 0.626*"what" + 0.191*"capital" + 0.128*"name" + '
+  '0.077*"country" + 0.076*"which" + 0.074*"first" + 0.062*"called" + '
+  '-0.061*"known" + 0.059*"group"'),
+ (2,
+  '0.539*"who" + 0.384*"which" + -0.290*"what" + 0.244*"country" + '
+  '0.230*"first" + 0.185*"name" + 0.160*"wrote" + 0.115*"known" + '
+  '0.114*"would" + 0.111*"hit"'),
+ (3,
+  '-0.903*"capital" + 0.217*"what" + -0.197*"country" + -0.141*"which" + '
+  '0.132*"who" + -0.106*"city" + 0.085*"name" + 0.057*"first" + 0.055*"called" '
+  '+ 0.049*"group"'),
+ (4,
+  '-0.593*"who" + 0.386*"country" + 0.374*"which" + -0.275*"capital" + '
+  '0.234*"would" + 0.201*"find" + -0.192*"wrote" + 0.182*"where" + '
+  '0.098*"largest" + 0.093*"state"'),
+ (5,
+  '-0.536*"would" + -0.458*"where" + 0.403*"name" + -0.386*"find" + '
+  '-0.186*"who" + 0.169*"which" + 0.121*"group" + 0.118*"country" + '
+  '-0.113*"state" + -0.098*"australian"'),
+ (6,
+  '0.653*"name" + -0.394*"called" + -0.374*"group" + -0.268*"animal" + '
+  '-0.203*"country" + 0.187*"where" + -0.134*"which" + 0.108*"common" + '
+  '0.107*"first" + 0.100*"would"'),
+ (7,
+  '0.446*"called" + 0.442*"group" + -0.421*"country" + 0.342*"name" + '
+  '0.314*"animal" + 0.228*"where" + 0.158*"capital" + -0.145*"what" + '
+  '0.131*"would" + -0.105*"which"'),
+ (8,
+  '-0.582*"how" + -0.535*"known" + -0.460*"many" + -0.217*"better" + '
+  '0.137*"name" + 0.125*"country" + 0.101*"first" + 0.093*"fear" + '
+  '-0.071*"commonly" + -0.069*"also"'),
+ (9,
+  '0.662*"known" + -0.424*"how" + -0.395*"many" + 0.261*"better" + '
+  '-0.247*"first" + -0.108*"fear" + 0.090*"also" + 0.059*"name" + '
+  '0.059*"would" + 0.058*"who"')]

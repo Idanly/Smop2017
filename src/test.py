@@ -3,6 +3,9 @@ from nltk.corpus import stopwords
 
 
 # I need to find the problem with names and two words
+from nltk.corpus.reader import WordNetError
+
+
 def getHypernym(word_to_find):
     categories = {0: wn.synset('person.n.01'), 1: wn.synset('animal.n.01'), 2: wn.synset('color.n.01'),
                   3: wn.synset('country.n.01'), 4: wn.synset('city.n.01'), 5: wn.synset('year.n.01'),
