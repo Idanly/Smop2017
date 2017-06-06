@@ -1,4 +1,5 @@
-from gensim import corpora, models
+from gensim import models
+
 
 def run():
     word2vec_model = models.Word2Vec.load('word2vec_model.w2v')
