@@ -47,7 +47,8 @@ class RelevantSentencesScrapper:
             try:
                 sentence_vec += self.word2vec_model[word]
             except KeyError:
-                print("word: " + word + " not in model")
+                continue
+                # print("word: " + word + " not in model")
         """
         query_lsi = self.lsi_model[query_vec]
         sentence_vec = self.dictionary.doc2bow(sentence.lower().split())

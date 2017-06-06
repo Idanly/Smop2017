@@ -294,7 +294,7 @@ class SentenceScrapper:
 
 
 def find_answer(question):
-    query_to_pass = re.sub(r'\W+', '', question.lower())
+    query_to_pass = re.sub(r'\W+', ' ', question.lower())
     # query_to_pass = "what is the depth of the mediterranean sea"
 
     time1 = time.time()
@@ -312,12 +312,12 @@ def find_answer(question):
     sentence_scrapper.kill()
 
     print("relevant sentences:")
-    for sent in rel_sentences:
-        print(sent)
 
     UpdateWord2VecModel.run()
+    return rel_sentences
 
 if __name__ == "__main__":
+
     find_answer()
 
     # all_sentences = sentence_scrapper.get_sentences_returned()

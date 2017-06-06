@@ -8,7 +8,7 @@ def run():
 
     word2vec_model.build_vocab(more_sentences(), update=True)
     num_sentences_returned = int(open('num_sentences_returned.txt').readline())
-    word2vec_model.train(more_sentences(), total_examples=num_sentences_returned, epochs=word2vec_model.iter)
+    word2vec_model.train(more_sentences(), total_examples=num_sentences_returned)
 
     word2vec_model.save('word2vec_model.w2v')
     print(word2vec_model)
