@@ -1,8 +1,8 @@
-from nltk.corpus import wordnet as wn
-from nltk.corpus import stopwords
-from nltk.tag import pos_tag
-from nltk.stem.snowball import SnowballStemmer
 import inflection
+from nltk.corpus import stopwords
+from nltk.corpus import wordnet as wn
+from nltk.stem.snowball import SnowballStemmer
+from nltk.tag import pos_tag
 
 
 class classifyQuestions:
@@ -106,7 +106,3 @@ class classifyQuestions:
             return (list(categories.keys())[list(categories.values()).index(root)])
         return None
 
-
-if __name__ == "__main__":
-    question = QuestToClassify("What day comes after thursday")
-    print(question.createQuestionVector())
