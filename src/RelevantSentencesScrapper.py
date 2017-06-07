@@ -1,14 +1,11 @@
-import warnings
-
-warnings.simplefilter("ignore", UserWarning)
-
-from gensim import models
 import numpy as np
+from gensim import models
+
 from RelevancyFinder import important_words
 
 
 class RelevantSentencesScrapper:
-    def __init__(self, s_scrapper, search_words, max_sentences=-1):
+    def __init__(self, s_scrapper, search_words, model, max_sentences=-1):
         self.search_words = search_words
         self.max_sentences = max_sentences
         self.sentences_returned = 0
@@ -18,16 +15,14 @@ class RelevantSentencesScrapper:
         self.lsi_model = models.LsiModel.load('Ignore\lsi_model.lsi')
         self.dictionary = corpora.Dictionary.load_from_text('_wordids.txt.bz2')
         """
-        print("About to load word2vec model...")
         # self.word2vec_model = models.KeyedVectors.load_word2vec_format('Ignore/GoogleNews-vectors-negative300.bin',
         #                                                               binary=True)
 
-        self.word2vec_model = models.KeyedVectors.load_word2vec_format('Ignore\word2vec_6B.100d.w2v',
-                                                                       binary=False)
-
+        # self.word2vec_model = models.KeyedVectors.load_word2vec_format('Ignore\word2vec_6B.100d.w2v',
+        #                                                              binary=False)
+        self.word2vec_model = model
         self.similarity_hi_thresh = 1
         self.similarity_low_thresh = 0.6
-        print("init Relevant Sentences Scrapper")
 
     def __iter__(self):
         while self.sentences_returned != self.max_sentences:
@@ -62,8 +57,6 @@ class RelevantSentencesScrapper:
         sentence_lsi = self.lsi_model[sentence_vec]
         """
         similarity = RelevantSentencesScrapper.cosine_similarity(query_vec, sentence_vec)
-        if similarity < self.similarity_low_thresh:
-            print("unsimilar sentence: " + sentence)
         return similarity
 
     @staticmethod

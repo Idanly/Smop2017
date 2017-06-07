@@ -1,22 +1,17 @@
-import warnings
-
-warnings.simplefilter("ignore", UserWarning)
-
+import certifi
+import multiprocessing
 import re
+import sys
 import time
 import unicodedata
-from multiprocessing import Pool
-import multiprocessing
-from threading import Thread, Lock
-import sys
-
-import certifi
 import urllib3
 from bs4 import BeautifulSoup
+from multiprocessing import Pool
+from threading import Thread, Lock
 
+import UpdateWord2VecModel
 from RelevancyFinder import important_query_words
 from RelevantSentencesScrapper import RelevantSentencesScrapper
-import UpdateWord2VecModel
 
 http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where(), timeout=3.0)
 
@@ -227,7 +222,8 @@ class ParagraphScrapper:
             paragraphs = soup.find_all("p")
             return [p.text for p in paragraphs]
         except Exception as e:
-            print("error from extract paragraphs: " + str(e))
+            # print("error from extract paragraphs: " + str(e))
+            pass
 
     def flush_paragraphs(self):
         with self.paragraph_lock:
@@ -294,33 +290,24 @@ class SentenceScrapper:
         self.sentences_returned.close()
 
 
-def find_answer(question):
+def find_answer(question, w2v_model):
     query_to_pass = re.sub(r'\W+', ' ', question.lower()).strip()
     print("passing query: " + query_to_pass)
     # query_to_pass = "what is the depth of the mediterranean sea"
 
-    time1 = time.time()
     query_important_words = important_query_words(query=query_to_pass)
     query_important_joined = ' '.join(query_important_words)
-    print("Time to filter query: " + str(time.time() - time1))
-    time2 = time.time()
     sentence_scrapper = SentenceScrapper(query=query_important_joined)
-    print("Time to init sentence scrapper: " + str(time.time() - time2))
-    time3 = time.time()
     rel_scrapper = RelevantSentencesScrapper(s_scrapper=sentence_scrapper, search_words=query_important_words,
-                                             max_sentences=100)
-    print("Time to init relevant sentences: " + str(time.time() - time3))
+                                             model=w2v_model, max_sentences=100)
     time4 = time.time()
     rel_sentences = list(rel_scrapper)
     print("Time to scrape relevant sentences: " + str(time.time() - time4))
     sentence_scrapper.kill()
 
-    print("relevant sentences:")
-    for sent in rel_sentences:
-        print(sent)
-
     # UpdateWord2VecModel.run()
     return rel_sentences
+
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
